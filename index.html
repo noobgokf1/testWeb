@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Scenes & Quotes</title>
+    <style>
+        body {
+            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        body.dark {
+            background-color: #1c1c1c;
+            color: #f4f4f4;
+        }
+
+        .title-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        body.dark .title-container {
+            background: rgba(46, 46, 46, 0.8);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f4f4f4;
+            color: #444;
+            border: none;
+            padding: 0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 20px; /* Keep the buttons at the same vertical position */
+        }
+
+        body.dark button {
+            background-color: #444;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        body.dark button:hover {
+            background-color: #555;
+        }
+
+        #homeButton {
+            left: 20px; /* Position to the left */
+        }
+
+        #quotesButton {
+            left: 100px; /* Position to the right of Home button */
+        }
+
+        #darkModeToggle {
+            top: 20px; /* Keep it in the corner */
+            right: 20px; /* Adjust position */
+        }
+
+        section {
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            transition: opacity 0.5s ease;
+            margin-bottom: 100px;
+            opacity: 0;
+            display: none; /* Hide sections by default */
+        }
+
+        body.dark section {
+            background: #2c2c2c;
+        }
+
+        .article-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        article {
+            padding: 15px;
+            border-radius: 10px;
+            background: #e9e9e9;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            text-align: center; /* Center text within the article */
+        }
+
+        article:hover {
+            transform: scale(1.02);
+        }
+
+        body.dark article {
+            background: #3d3d3d;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        body.dark .quote {
+            color: #757575;
+        }
+
+        footer {
+            position: fixed;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            padding: 15px;
+            background-color: #eeeeee;
+            color: #383838;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark footer {
+            color: #ffffff;
+            background-color: #383838;
+        }
+
+        .splash-circle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            animation: spread 0.6s forwards;
+            z-index: 20;
+        }
+
+        @keyframes spread {
+            to {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
+
+        .button-grow {
+            animation: buttonGrow 0.3s forwards;
+        }
+
+        @keyframes buttonGrow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .article-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="nav-button" id="homeButton">🏠</button>
+    <button class="nav-button" id="quotesButton">📝</button>
+    <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
+
+    <div class="title-container">
+        <h1>AI GENERATED GAME REAL 100%</h1>
+    </div>
+
+    <section id="homeSection">
+        <div class="article-container">
+            <article>
+                <h2>Game Overview</h2>
+                <p>This immersive narrative adventure allows you to explore the emotional landscapes of our protagonist as they confront their past, make difficult choices, and seek redemption. The game blends stunning visuals with thought-provoking themes, encouraging players to reflect on their own experiences.</p>
+            </article>
+            <article>
+                <h2>Game Features</h2>
+                <p>Rich Storytelling: Dive into a narrative filled with twists, turns, and emotional depth.<br>
+                    Interactive Choices: Every decision you make shapes the outcome of the story.<br>
+                    Unique Environments: Experience diverse settings, from eerie towns to haunting memories.<br>
+                    Challenging Puzzles: Solve complex puzzles that reveal the protagonist's inner struggles.</p>
+            </article>
+            <article>
+                <h2>Development Insights</h2>
+                <p>Learn about the inspiration behind "Shadows," from real-life stories to psychological concepts that influenced our narrative design. Discover how we created an engaging world that reflects the complexities of human emotions.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="quotesSection">
+        <div class="article-container">
+            <article>
+                <h2>The Forgotten Friend</h2>
+                <div class="quote">"Sometimes it's easier to pretend that you don't care, than to admit it's killing you."</div>
+                <div class="scene-description">
+                    <p><strong>Environment:</strong> A dimly lit, abandoned living room. Dusty furniture, half-eaten meals, and a photo of the protagonist with a friend in happier times. As the player looks closer, the photo begins to decay, the face of the friend slowly distorting.</p>
+                    <p><strong>Gameplay:</strong> The player is presented with an interaction to reach out and help this friend (in the past), but they must choose to engage or ignore. If ignored, the room darkens, and eerie whispers grow louder, symbolizing guilt and regret.</p>
+                    <p><strong>Impact:</strong> The game subtly shows that the protagonist once chose to pretend they didn’t care, leading to this haunting scenario. The more they deny, the worse the environment becomes (e.g., lights flicker, walls crumble).</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>The Forked Road</h2>
+                <div class="quote">"Sometimes the right path is not the easiest one."</div>
+                <div class="scene-description">
+                    <p><strong>Environment:</strong> A surreal forest path that splits into two directions. One path is straight, paved, and inviting, while the other is dark, thorny, and foggy. There’s an eerie silence that follows the player’s decision.</p>
+                    <p><strong>Gameplay:</strong> The easy path loops back to the start, wasting the player's time. The harder path leads to progress but involves difficult puzzles or physical challenges (e.g., walking through dense fog, hearing disturbing noises, solving cryptic puzzles about loss).</p>
+                    <p><strong>Impact:</strong> This scene represents the struggle of facing difficult choices in life, showing that doing what’s right often means confronting hardship. The path chosen subtly affects future interactions in the game.</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>The Cracked Mirror</h2>
+                <div class="quote">"My biggest fear is that eventually you will see me the way I see myself."</div>
+                <div class="scene-description">
+                    <p><strong>Environment:</strong> The player finds a cracked mirror in a decrepit room. As they approach, their reflection is distorted—pieces of their face missing, or shadowy figures behind them. The atmosphere feels like a warped version of their childhood bedroom.</p>
+                    <p><strong>Gameplay:</strong> The player must interact with the mirror, uncovering hints about their self-image (e.g., their reflection may whisper self-deprecating thoughts). At certain points, the reflection will move independently, symbolizing how their own fears and insecurities have taken control.</p>
+                    <p><strong>Impact:</strong> This reflects the protagonist’s fear of being seen as broken or worthless, just as they see themselves. The mirror can even become an obstacle, blocking paths until the player "confronts" it and moves forward.</p>
+                </div>
+            </article>
+
+            <article>
+                <h2>The Blindfolded Town</h2>
+                <div class="quote">"A lot of people will look at you but only a few will see you."</div>
+                <div class="scene-description">
+                    <p><strong>Environment:</strong> A town filled with NPCs, all wearing blindfolds. The player walks through the town, but no one acknowledges their presence, even as they try to interact with them. The atmosphere is eerie—no noise except footsteps.</p>
+                    <p><strong>Gameplay:</strong> The player must complete a puzzle or series of interactions to get one NPC to "see" them (e.g., removing their blindfold, solving a puzzle about perception or empathy). Only after being seen can the player progress.</p>
+                    <p><strong>Impact:</strong> The town represents isolation and the feeling of being invisible to those around them. The interaction ties into the emotional themes of being overlooked or misunderstood.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Noobgokf's AI Game Storylines. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const toggleButton = document.getElementById('darkModeToggle');
+        const homeButton = document.getElementById('homeButton');
+        const quotesButton = document.getElementById('quotesButton');
+        const homeSection = document.getElementById('homeSection');
+        const quotesSection = document.getElementById('quotesSection');
+
+        const showSection = (section) => {
+            section.style.display = 'block';
+            setTimeout(() => {
+                section.style.opacity = '1';
+            }, 10);
+        };
+
+        const hideSection = (section) => {
+            section.style.opacity = '0';
+            setTimeout(() => {
+                section.style.display = 'none';
+            }, 500); // Match this to the transition duration in CSS
+        };
+
+        toggleButton.addEventListener('click', (event) => {
+            const splashCount = 10;
+            const { clientX, clientY } = event;
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            const circleColor = document.body.classList.contains('dark') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
+
+            for (let i = 0; i < splashCount; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('splash-circle');
+                circle.style.backgroundColor = circleColor;
+
+                const angle = Math.random() * 2 * Math.PI;
+                const radius = Math.random() * 50 + 20;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                circle.style.setProperty('--x', `${x}px`);
+                circle.style.setProperty('--y', `${y}px`);
+                circle.style.left = `${clientX - 7}px`;
+                circle.style.top = `${clientY + scrollY - 7}px`;
+
+                document.body.appendChild(circle);
+
+                circle.addEventListener('animationend', () => {
+                    circle.remove();
+                });
+            }
+
+            document.body.classList.toggle('dark');
+            toggleButton.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+            toggleButton.classList.add('button-grow');
+
+            setTimeout(() => {
+                toggleButton.classList.remove('button-grow');
+            }, 300);
+        });
+
+        homeButton.addEventListener('click', () => {
+            const splashCount = 10;
+            const { clientX, clientY } = event;
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            const circleColor = document.body.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(150, 150, 150, 0.8)';
+            for (let i = 0; i < splashCount; i++) {
+                const circle = document.createElement('div');
+                    circle.classList.add('splash-circle');
+                    circle.style.backgroundColor = circleColor;
+
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = Math.random() * 50 + 20;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+
+                    circle.style.setProperty('--x', `${x}px`);
+                    circle.style.setProperty('--y', `${y}px`);
+                    circle.style.left = `${clientX - 7}px`;
+                    circle.style.top = `${clientY + scrollY - 7}px`;
+
+                    document.body.appendChild(circle);
+
+                    circle.addEventListener('animationend', () => {
+                        circle.remove();
+                    });
+                }
+
+                hideSection(quotesSection);
+                homeButton.classList.add('button-grow');
+
+                setTimeout(() => {
+                    showSection(homeSection);
+                    homeButton.classList.remove('button-grow');
+                }, 500);
+        });
+
+        quotesButton.addEventListener('click', () => {
+            const splashCount = 10;
+            const { clientX, clientY } = event;
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            const circleColor = document.body.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(150, 150, 150, 0.8)';
+            for (let i = 0; i < splashCount; i++) {
+                const circle = document.createElement('div');
+                    circle.classList.add('splash-circle');
+                    circle.style.backgroundColor = circleColor;
+
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = Math.random() * 50 + 20;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+
+                    circle.style.setProperty('--x', `${x}px`);
+                    circle.style.setProperty('--y', `${y}px`);
+                    circle.style.left = `${clientX - 7}px`;
+                    circle.style.top = `${clientY + scrollY - 7}px`;
+
+                    document.body.appendChild(circle);
+
+                    circle.addEventListener('animationend', () => {
+                        circle.remove();
+                    });
+                }
+
+                hideSection(homeSection);
+                quotesButton.classList.add('button-grow');
+
+                setTimeout(() => {
+                    showSection(quotesSection);
+                    quotesButton.classList.remove('button-grow');
+                }, 500);
+        });
+
+        // Initialize to show Home section
+        homeSection.style.display = 'block';
+        homeSection.style.opacity = '1'; // Set opacity for the initial display
+    </script>
+</body>
+</html>
