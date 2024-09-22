@@ -85,21 +85,58 @@
             right: 20px; /* Adjust position */
         }
 
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(calc(-50% + 50vw), calc(-50% + 50vh));
+            }
+
+        }
+
+        .circle {
+            position:fixed;
+            border-radius: 100%;
+            background-color: #eeeeee;
+            pointer-events: none; /* Ensure they don't interfere with interactions */
+            animation: float linear infinite;
+            z-index: -1; /* Place behind all other content */
+        }
+
+        body.dark .circle {
+            background-color: #1f1f1f;
+        }
+
         section {
+
+            opacity: 0; /* Keep this for the fade effect */
+            display: none; /* Hide sections by default */
+            transform: scale(0.95); /* Start slightly scaled down */
+
             padding: 30px;
             margin: 20px auto;
             max-width: 800px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             background: #fff;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
             margin-bottom: 100px;
-            opacity: 0;
-            display: none; /* Hide sections by default */
         }
 
         body.dark section {
             background: #2c2c2c;
+        }
+
+        section.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(0); /* Slide in from the left */
+        }
+
+        section.hide {
+            opacity: 0;
+            transform: translateX(100%); /* Slide out to the right */
         }
 
         .article-container {
@@ -177,6 +214,8 @@
             animation: buttonGrow 0.3s forwards;
         }
 
+
+
         @keyframes buttonGrow {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -191,6 +230,11 @@
     </style>
 </head>
 <body>
+
+    <audio id="clickSound" src="click-sound.mp3" preload="auto"></audio>
+    <audio  autoplay="" loop="" id="backgroundSound" src="background-sound.mp3"></audio>
+
+
     <button class="nav-button" id="homeButton">🏠</button>
     <button class="nav-button" id="quotesButton">📝</button>
     <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
@@ -273,31 +317,39 @@
         const quotesButton = document.getElementById('quotesButton');
         const homeSection = document.getElementById('homeSection');
         const quotesSection = document.getElementById('quotesSection');
+        const clickSound = document.getElementById('clickSound'); // Select the click sound element
+
+        const playClickSound = () => {
+            clickSound.currentTime = 0; // Reset the sound (in case it overlaps)
+            clickSound.play(); // Play the sound
+        };
 
         const showSection = (section) => {
             section.style.display = 'block';
             setTimeout(() => {
                 section.style.opacity = '1';
+                section.style.transform = 'scale(1)'; // Added smooth scale-in effect
             }, 10);
         };
 
         const hideSection = (section) => {
             section.style.opacity = '0';
+            section.style.transform = 'scale(0.95)'; // Added smooth scale-out effect
             setTimeout(() => {
                 section.style.display = 'none';
             }, 500); // Match this to the transition duration in CSS
         };
 
-        toggleButton.addEventListener('click', (event) => {
+        // Function for splash animation
+        const createSplashEffect = (event, buttonColor) => {
             const splashCount = 10;
             const { clientX, clientY } = event;
             const scrollY = window.scrollY || document.documentElement.scrollTop;
-            const circleColor = document.body.classList.contains('dark') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
 
             for (let i = 0; i < splashCount; i++) {
                 const circle = document.createElement('div');
                 circle.classList.add('splash-circle');
-                circle.style.backgroundColor = circleColor;
+                circle.style.backgroundColor = buttonColor;
 
                 const angle = Math.random() * 2 * Math.PI;
                 const radius = Math.random() * 50 + 20;
@@ -315,6 +367,14 @@
                     circle.remove();
                 });
             }
+        };
+
+        // Dark mode toggle event
+        toggleButton.addEventListener('click', (event) => {
+            playClickSound(); // Play the click sound on button click
+
+            const circleColor = document.body.classList.contains('dark') ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
+            createSplashEffect(event, circleColor);
 
             document.body.classList.toggle('dark');
             toggleButton.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
@@ -325,81 +385,106 @@
             }, 300);
         });
 
-        homeButton.addEventListener('click', () => {
-            const splashCount = 10;
-            const { clientX, clientY } = event;
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
-            const circleColor = document.body.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(150, 150, 150, 0.8)';
-            for (let i = 0; i < splashCount; i++) {
+        const createBackgroundCircles = () => {
+            const circleCount = 35; // Number of circles to create
+            const containerWidth = window.innerWidth;
+            const containerHeight = window.innerHeight;
+            const circles = [];
+
+            for (let i = 0; i < circleCount; i++) {
                 const circle = document.createElement('div');
-                    circle.classList.add('splash-circle');
-                    circle.style.backgroundColor = circleColor;
+                circle.classList.add('circle');
 
-                    const angle = Math.random() * 2 * Math.PI;
-                    const radius = Math.random() * 50 + 20;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
+                const size = Math.random() * 100 + 50; // Size between 50px and 150px
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
 
-                    circle.style.setProperty('--x', `${x}px`);
-                    circle.style.setProperty('--y', `${y}px`);
-                    circle.style.left = `${clientX - 7}px`;
-                    circle.style.top = `${clientY + scrollY - 7}px`;
+                circle.style.left = `${Math.random() * (containerWidth - size)}px`;
+                circle.style.top = `${Math.random() * (containerHeight - size)}px`;
 
-                    document.body.appendChild(circle);
+                document.body.appendChild(circle);
 
-                    circle.addEventListener('animationend', () => {
-                        circle.remove();
-                    });
-                }
+                circles.push({
+                    element: circle,
+                    dx: (Math.random() - 0.5) * 2, // Random horizontal speed
+                    dy: (Math.random() - 0.5) * 2  // Random vertical speed
+                });
+            }
 
-                hideSection(quotesSection);
-                homeButton.classList.add('button-grow');
+            const animateCircles = () => {
+                circles.forEach(circle => {
+                    const rect = circle.element.getBoundingClientRect();
 
-                setTimeout(() => {
-                    showSection(homeSection);
-                    homeButton.classList.remove('button-grow');
-                }, 500);
+                    // Update position
+                    circle.element.style.left = `${rect.left + circle.dx}px`;
+                    circle.element.style.top = `${rect.top + circle.dy}px`;
+
+                    // Bounce off edges
+                    if (rect.left + circle.dx < 0 || rect.right + circle.dx > containerWidth) {
+                        circle.dx *= -1; // Reverse horizontal direction
+                    }
+                    if (rect.top + circle.dy < 0 || rect.bottom + circle.dy > containerHeight) {
+                        circle.dy *= -1; // Reverse vertical direction
+                    }
+                });
+
+                requestAnimationFrame(animateCircles);
+            };
+
+            animateCircles();
+        };
+
+        // Call the function to create circles on load
+        createBackgroundCircles();
+
+
+        // Home button click event
+        homeButton.addEventListener('click', (event) => {
+            playClickSound(); // Play the click sound on button click
+
+            const circleColor = document.body.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(150, 150, 150, 0.8)';
+            createSplashEffect(event, circleColor);
+
+            hideSection(quotesSection);
+            homeButton.classList.add('button-grow');
+
+            setTimeout(() => {
+                showSection(homeSection);
+                homeButton.classList.remove('button-grow');
+            }, 500);
         });
 
-        quotesButton.addEventListener('click', () => {
-            const splashCount = 10;
-            const { clientX, clientY } = event;
-            const scrollY = window.scrollY || document.documentElement.scrollTop;
+        // Quotes button click event
+        quotesButton.addEventListener('click', (event) => {
+            playClickSound(); // Play the click sound on button click
+
             const circleColor = document.body.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(150, 150, 150, 0.8)';
-            for (let i = 0; i < splashCount; i++) {
-                const circle = document.createElement('div');
-                    circle.classList.add('splash-circle');
-                    circle.style.backgroundColor = circleColor;
+            createSplashEffect(event, circleColor);
 
-                    const angle = Math.random() * 2 * Math.PI;
-                    const radius = Math.random() * 50 + 20;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
+            hideSection(homeSection);
+            quotesButton.classList.add('button-grow');
 
-                    circle.style.setProperty('--x', `${x}px`);
-                    circle.style.setProperty('--y', `${y}px`);
-                    circle.style.left = `${clientX - 7}px`;
-                    circle.style.top = `${clientY + scrollY - 7}px`;
-
-                    document.body.appendChild(circle);
-
-                    circle.addEventListener('animationend', () => {
-                        circle.remove();
-                    });
-                }
-
-                hideSection(homeSection);
-                quotesButton.classList.add('button-grow');
-
-                setTimeout(() => {
-                    showSection(quotesSection);
-                    quotesButton.classList.remove('button-grow');
-                }, 500);
+            setTimeout(() => {
+                showSection(quotesSection);
+                quotesButton.classList.remove('button-grow');
+            }, 500);
         });
+
+        document.addEventListener('click', () => {
+            const backgroundSound = document.getElementById('backgroundSound');
+            backgroundSound.volume = 0.09
+            if (backgroundSound.paused) {
+                backgroundSound.play();
+            }
+        });
+
 
         // Initialize to show Home section
         homeSection.style.display = 'block';
         homeSection.style.opacity = '1'; // Set opacity for the initial display
+        homeSection.style.transform = 'scale(1)'; // Ensure it's scaled correctly
+
     </script>
+
 </body>
 </html>
