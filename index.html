@@ -245,23 +245,163 @@
 
     <section id="homeSection">
         <div class="article-container">
-            <article>
-                <h2>Game Overview</h2>
-                <p>This immersive narrative adventure allows you to explore the emotional landscapes of our protagonist as they confront their past, make difficult choices, and seek redemption. The game blends stunning visuals with thought-provoking themes, encouraging players to reflect on their own experiences.</p>
+    
+            <!-- Game Overview with fade-in effect -->
+            <article class="fade-in">
+                <h2 class="animated-title">Game Overview</h2>
+                <p>This immersive narrative adventure allows you to explore emotional landscapes as the protagonist confronts their past and seeks redemption. Stunning visuals meet thought-provoking gameplay.</p>
             </article>
-            <article>
-                <h2>Game Features</h2>
-                <p>Rich Storytelling: Dive into a narrative filled with twists, turns, and emotional depth.<br>
-                    Interactive Choices: Every decision you make shapes the outcome of the story.<br>
-                    Unique Environments: Experience diverse settings, from eerie towns to haunting memories.<br>
-                    Challenging Puzzles: Solve complex puzzles that reveal the protagonist's inner struggles.</p>
-            </article>
-            <article>
-                <h2>Development Insights</h2>
-                <p>Learn about the inspiration behind "Shadows," from real-life stories to psychological concepts that influenced our narrative design. Discover how we created an engaging world that reflects the complexities of human emotions.</p>
+    
+            <!-- Updated Game Features with icon-based cards and hover effect -->
+            <div class="features-grid">
+                <article class="feature-card">
+                    <img src="storytelling-icon.png" alt="Storytelling Icon" class="feature-icon">
+                    <h3>Rich Storytelling</h3>
+                    <p>Dive into a narrative filled with twists and emotional depth.</p>
+                </article>
+    
+                <article class="feature-card">
+                    <img src="choices-icon.png" alt="Choices Icon" class="feature-icon">
+                    <h3>Interactive Choices</h3>
+                    <p>Every decision you make shapes the outcome of the story.</p>
+                </article>
+    
+                <article class="feature-card">
+                    <img src="environment-icon.png" alt="Environment Icon" class="feature-icon">
+                    <h3>Unique Environments</h3>
+                    <p>Experience diverse settings, from eerie towns to haunting memories.</p>
+                </article>
+    
+                <article class="feature-card">
+                    <img src="puzzle-icon.png" alt="Puzzle Icon" class="feature-icon">
+                    <h3>Challenging Puzzles</h3>
+                    <p>Solve puzzles that reflect the protagonist’s inner struggles.</p>
+                </article>
+            </div>
+    
+            <!-- Development Insights Section -->
+            <article class="fade-in">
+                <h2 class="animated-title">Development Insights</h2>
+                <p>Explore real-life inspirations and psychological themes that shaped the narrative design of our game.</p>
             </article>
         </div>
     </section>
+    
+    <style>
+        /* Animated underline for titles */
+        .animated-title {
+            position: relative;
+            display: inline-block;
+        }
+    
+        .animated-title::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #4caf50;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+    
+        .animated-title:hover::after {
+            width: 100%;
+        }
+    
+        /* Fade-in effect for articles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+    
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        /* Features Grid Layout */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    
+        /* Feature Cards with subtle hover effect */
+        .feature-card {
+            background-color: #e9e9e9; /* Same as light background */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Icon styles for each feature */
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            filter: invert(0.8); /* Black icons for light mode */
+            transition: filter 0.3s;
+        }
+    
+        body.dark .feature-icon {
+            filter: invert(0); /* White icons for dark mode */
+        }
+    
+        /* Dark mode adjustments */
+        body.dark .feature-card {
+            background-color:#444; /* Matches dark background */
+            color: white;
+        }
+    
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <script>
+        // Add class 'show' to elements when they're in view for fade-in effect
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+    
+        fadeInElements.forEach(element => observer.observe(element));
+    </script>
+    
+    
+    <script>
+        // Slideshow functionality for Development Insights
+        let slideIndex = 0;
+        showSlides();
+    
+        function showSlides() {
+            let slides = document.querySelectorAll('.slideshow .slide');
+            slides.forEach((slide, index) => {
+                slide.style.display = 'none';
+            });
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000); // Change slide every 3 seconds
+        }
+    </script>
+    
 
     <section id="quotesSection">
         <div class="article-container">
